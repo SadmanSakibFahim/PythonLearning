@@ -1,0 +1,1 @@
+- initial entries 'explore your data', 'first machine leearning model', 'model validation', 'underfitting and overfitting', 'random forest' are from the kaggle intro to machine learning micro course
