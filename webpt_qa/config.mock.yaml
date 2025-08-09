@@ -1,0 +1,30 @@
+base_url: "http://localhost:8000"
+headless: true
+default_timeout_seconds: 10
+
+login:
+  url: "http://localhost:8000/login.html"
+  username_selector: { type: css, value: "#username" }
+  password_selector: { type: css, value: "#password" }
+  submit_selector:   { type: css, value: "#login-btn" }
+  post_login_wait_seconds: 1
+
+patients:
+  url_template: "http://localhost:8000/patient_profile.html?patient_id={patient_id}"
+  pages:
+    patient_profile:
+      url_template: "http://localhost:8000/patient_profile.html?patient_id={patient_id}"
+      ready_selector: { type: css, value: "div.profile-container" }
+      fields:
+        first_name:   { type: css, value: "input[name='firstName']" }
+        last_name:    { type: css, value: "input[name='lastName']" }
+        dob:          { type: css, value: "input[name='dob']" }
+        phone:        { type: css, value: "input[name='phone']" }
+        address:      { type: css, value: "textarea[name='address']" }
+    scheduler:
+      url_template: "http://localhost:8000/scheduler.html?patient_id={patient_id}"
+      ready_selector: { type: css, value: "div.scheduler-root" }
+      fields:
+        next_appointment_card: { type: css, value: "div.next-appointment" }
+        therapist_name:        { type: css, value: "div.therapist-name" }
+        location:              { type: css, value: "div.location-name" }

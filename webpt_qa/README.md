@@ -50,3 +50,26 @@ If an element cannot be located, a small `.error.txt` file is emitted and the pa
 - All selectors in the sample config are placeholders; you must update them for your tenant/version of WebPT.
 - Consider running without headless for initial selector tuning by setting `SELENIUM_HEADLESS=0` in your environment.
 - Two login modes are supported: username/password or existing session cookies (via `cookies_path` in config). MFA flows may require manual cookie export.
+
+## Local mock testing (no real WebPT)
+
+You can test the tool against a local mock site without logging into WebPT.
+
+1. Serve the mock pages:
+   ```
+   bash /workspace/webpt_qa/serve_mock.sh
+   ```
+   Leave this running (it serves on http://localhost:8000).
+
+2. In a new terminal, run the CLI using the mock config and skip login:
+   ```
+   source /workspace/.venv/bin/activate
+   python -m webpt_qa.cli capture \
+     --config /workspace/webpt_qa/config.mock.yaml \
+     --output-dir /workspace/webpt_qa/output_mock \
+     --patient-ids 123 \
+     --pages patient_profile,scheduler \
+     --skip-login
+   ```
+
+Screenshots will be saved under `output_mock/123/...`.

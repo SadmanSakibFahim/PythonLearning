@@ -33,7 +33,8 @@ def cmd_capture(args: argparse.Namespace) -> None:
 
     driver = create_driver(config)
     try:
-        ensure_logged_in(driver, config)
+        if not args.skip_login:
+            ensure_logged_in(driver, config)
         ids = _read_patient_ids(args)
         page_keys = args.pages.split(",") if args.pages else None
         for pid in ids:
@@ -54,6 +55,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_cap.add_argument("--patient-ids", nargs="*", help="One or more patient IDs")
     p_cap.add_argument("--patient-id-file", help="File path with one patient ID per line")
     p_cap.add_argument("--pages", help="Comma-separated list of page keys to capture; defaults to all")
+    p_cap.add_argument("--skip-login", action="store_true", help="Skip login step (useful for local mock testing)")
     p_cap.set_defaults(func=cmd_capture)
 
     return parser
