@@ -1,0 +1,40 @@
+# Sample configuration for WebPT QA Screenshot Tool
+# IMPORTANT: Update all selectors and URLs for your environment.
+
+base_url: "https://app.webpt.com"  # base domain for cookie application
+
+headless: true                     # set false or use env SELENIUM_HEADLESS=0 for visible browser
+default_timeout_seconds: 25
+
+login:
+  url: "https://app.webpt.com/login"
+  username_selector: { type: css, value: "#username" }   # UPDATE
+  password_selector: { type: css, value: "#password" }   # UPDATE
+  submit_selector:   { type: css, value: "button[type='submit']" } # UPDATE
+  post_login_wait_seconds: 5
+  # cookies_path: "/absolute/path/to/cookies.json"      # Optional: use exported cookies instead of credentials
+
+patients:
+  # Optional patient landing URL if needed elsewhere
+  url_template: "https://app.webpt.com/patients/{patient_id}"  # UPDATE if applicable
+
+  pages:
+    patient_profile:
+      url_template: "https://app.webpt.com/patients/{patient_id}/profile"  # UPDATE
+      # iframe: { type: css, value: "iframe#profile-frame" }              # If content is inside an iframe, set this
+      # ready_selector: { type: css, value: "div.profile-container" }      # Optional element to wait for
+      fields:
+        first_name:   { type: css, value: "input[name='firstName']" }      # UPDATE selectors
+        last_name:    { type: css, value: "input[name='lastName']" }
+        dob:          { type: css, value: "input[name='dob']" }
+        phone:        { type: css, value: "input[name='phone']" }
+        address:      { type: css, value: "textarea[name='address']" }
+
+    scheduler:
+      url_template: "https://app.webpt.com/scheduler?patientId={patient_id}"  # UPDATE
+      # iframe: { type: css, value: "iframe#scheduler" }
+      # ready_selector: { type: css, value: "div.scheduler-root" }
+      fields:
+        next_appointment_card: { type: xpath, value: "//div[contains(@class,'next-appointment')]" }
+        therapist_name:        { type: xpath, value: "//div[contains(@class,'therapist-name')]" }
+        location:              { type: xpath, value: "//div[contains(@class,'location-name')]" }
